@@ -13,5 +13,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  build: {
+    outDir: '../spring/auction/src/main/resources/static',
+    emptyOutDir: true
   }
 })

@@ -1,0 +1,44 @@
+package klu.model;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import klu.repo.ProductRepository;
+
+@Service
+public class ProductManager {
+
+    @Autowired
+    ProductRepository PR;
+
+    public String addProduct(Product P) {
+        PR.save(P);
+        return "200::Product Added";
+    }
+
+    public String updateProduct(Product P) {
+        if (!PR.existsById(P.getId())) return "404::Product Not Found";
+        PR.save(P);
+        return "200::Product Updated";
+    }
+
+    public String deleteProduct(int id) {
+        if (!PR.existsById(id)) return "404::Product Not Found";
+        PR.deleteById(id);
+        return "200::Product Deleted";
+    }
+
+    public List<Product> getAllProducts() {
+        return PR.findAll();
+    }
+
+    public List<Product> getProductsBySeller(String email) {
+        return PR.findBySellerEmail(email);
+    }
+    
+    public Product getProductById(int id) {
+        return PR.findById(id).orElse(null);
+    }
+    
+    
+}

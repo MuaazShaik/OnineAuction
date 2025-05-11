@@ -1,0 +1,115 @@
+.home-container {
+  padding: 2rem 0;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+  border-radius: 1rem;
+  margin-bottom: 4rem;
+  color: white;
+}
+
+.hero-title {
+  font-size: 3.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-subtitle {
+  font-size: 1.5rem !important;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.features-section {
+  padding: 4rem 0;
+  background-color: #f5f5f5;
+  border-radius: 1rem;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem !important;
+  color: #1976d2;
+  font-weight: 600 !important;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h6 {
+  color: #1976d2;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.products-section {
+  padding: 2rem 0;
+}
+
+.products-section .section-title {
+  margin-bottom: 2rem !important;
+}
+
+.products-section .MuiCard-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.products-section .MuiCard-root:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.products-section .MuiCardContent-root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.products-section .MuiCardMedia-root {
+  height: 200px;
+  object-fit: cover;
+}
+
+.products-section .MuiButton-root {
+  margin-top: auto;
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem !important;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+} 

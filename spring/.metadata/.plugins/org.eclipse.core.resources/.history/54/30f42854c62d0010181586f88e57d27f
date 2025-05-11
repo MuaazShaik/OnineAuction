@@ -1,0 +1,75 @@
+package klu.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import klu.model.Product;
+import klu.model.ProductManager;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
+@RestController
+@RequestMapping("/products")
+@CrossOrigin(origins = "http://localhost:5173")
+public class ProductController {
+
+    @Autowired
+    private ProductManager PM;
+
+    @PostMapping("/add")
+    public String addProduct(
+        @RequestPart("product") Product P,
+        @RequestPart(value = "photo", required = false) MultipartFile photo
+    ) {
+        try {
+            if (photo != null && !photo.isEmpty()) {
+                if (photo.getSize() > 2 * 1024 * 1024) { // 2MB
+                    return "Photo size exceeds 2MB limit.";
+                }
+                String uploadDir = "uploads/";
+                Files.createDirectories(Paths.get(uploadDir));
+                String fileName = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+                Files.write(filePath, photo.getBytes());
+                P.setPhotoUrl("/products/photo/" + fileName);
+            }
+            return PM.addProduct(P);
+        } catch (Exception e) {
+            return "Error uploading product: " + e.getMessage();
+        }
+    }
+ // Endpoint to serve the photo
+    @GetMapping("/photo/{filename:.+}")
+    public @ResponseBody byte[] getPhoto(@PathVariable String filename) throws Exception {
+        Path filePath = Paths.get("uploads", filename);
+        return Files.readAllBytes(filePath);
+    }
+
+
+    @PutMapping("/update")
+    public String updateProduct(@RequestBody Product P) {
+        return PM.updateProduct(P);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") int id) {
+        return PM.deleteProduct(id);
+    }
+
+    @GetMapping("/all")
+    public List<Product> getAllProducts() {
+        return PM.getAllProducts();
+    }
+
+    @GetMapping("/seller/{email}")
+    public List<Product> getProductsBySeller(@PathVariable("email") String email) {
+        return PM.getProductsBySeller(email);
+    }
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") int id) {
+        return PM.getProductById(id);
+    }
+}
